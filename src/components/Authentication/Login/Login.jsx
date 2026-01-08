@@ -21,11 +21,7 @@ const Login = () => {
     try {
       // בדיקה מול השרת
       const res = await fetch(
-<<<<<<< HEAD
-        `http://localhost:3000/users?username=${username}`
-=======
         `http://localhost:3001/users?username=${username}`
->>>>>>> 1b9ba2c636092323e80ed9034bda719c5f4dab1a
       );
       const users = await res.json();
 
@@ -83,7 +79,3 @@ const Login = () => {
 };
 
 export default Login;
-<<<<<<< HEAD
-
-=======
->>>>>>> 1b9ba2c636092323e80ed9034bda719c5f4dab1a

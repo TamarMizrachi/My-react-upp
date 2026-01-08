@@ -43,9 +43,6 @@ export function useHttp() {
     sendRequest,
     clearError,
   };
-<<<<<<< HEAD
-}
-=======
 }
 
 
@@ -97,4 +94,3 @@ export function useHttp() {
 //   };
 // }
 
->>>>>>> 1b9ba2c636092323e80ed9034bda719c5f4dab1a

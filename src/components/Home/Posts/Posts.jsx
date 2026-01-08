@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-const Posts = () => {
-  return <h2>Posts Page</h2>;
-};
-
-export default Posts;
-=======
 import NavBar from "../../NavBar/NavBar"
 import { useEffect, useReducer, useState } from "react";
 import { useHttp } from "../../../hook/useHttp";
@@ -256,4 +249,3 @@ export default Posts;
           </button>
         </div>
       )} */}
->>>>>>> 1b9ba2c636092323e80ed9034bda719c5f4dab1a
