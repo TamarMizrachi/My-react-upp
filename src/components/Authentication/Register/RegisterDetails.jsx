@@ -61,7 +61,6 @@ const RegisterDetails = () => {
         geo: { lat, lng }
       },
       phone,
-      website,
       company: {
         name: companyName,
         catchPhrase,
