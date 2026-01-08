@@ -10,7 +10,7 @@ import Info from "./components/Home/Info/Info";
 import Todos from "./components/Home/Todos/Todos";
 import Posts from "./components/Home/Posts/Posts";
 import Albums from "./components/Home/Albums/Albums";
-
+import Photos from "./components/Home/Albums/Photos/Photos"
 
 
 
@@ -60,6 +60,8 @@ function AppRoutes() {
         path="*"
         element={user ? <Navigate to="/home" replace /> : <Navigate to="/" replace />}
       />
+
+      <Route path="/albums/:albumId/photos" element={<Photos />} />
     </Routes>
   );
 }
