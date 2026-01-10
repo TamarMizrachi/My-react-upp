@@ -4,6 +4,8 @@ import { useHttp } from "../../../hook/useHttp";
 import { apiRequest } from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
 import AlbumItem from "./AlbumItem";
+import { useParams } from "react-router-dom";
+
 const Albums = () => {
   // רדוסר מותאם לאלבומים
   const albumsReducer = (state, action) => {
@@ -17,6 +19,7 @@ const Albums = () => {
   const { user } = useAuth();
   const { sendRequest, isLoading } = useHttp();
   const [albums, dispatch] = useReducer(albumsReducer, []);
+  const { userId } = useParams();
 
   // States לחיפוש
   const [searchType, setSearchType] = useState("title");
@@ -52,17 +55,17 @@ const Albums = () => {
   };
 
   useEffect(() => {
-    if (!user?.id) return;
+    if (!userId) return;
 
     const fetchAlbums = async () => {
       // שליפת אלבומים של המשתמש הנוכחי בלבד
-      const url = `/albums?userId=${user.id}`;
+      const url = `/albums?userId=${userId}`;
       const data = await sendRequest(() => apiRequest(url));
       dispatch({ type: "SET", payload: data });
     };
 
     fetchAlbums();
-  }, [sendRequest, user?.id]);
+  }, [sendRequest, userId]);
 
   // לוגיקת סינון לפי דרישות (ID וכותרת)
   const displayedAlbums = albums.filter(album => {
@@ -82,26 +85,26 @@ const Albums = () => {
       <h2>My Albums</h2>
 
       {/* כפתור לפתיחת הטופס */}
-        <button onClick={() => setIsCreating(!isCreating)} className="add-btn">
-            {isCreating ? "Cancel" : "➕ Create New Album"}
-        </button>
+      <button onClick={() => setIsCreating(!isCreating)} className="add-btn">
+        {isCreating ? "Cancel" : "➕ Create New Album"}
+      </button>
 
-        {/* הטופס עצמו */}
-        {isCreating && (
-            <form onSubmit={saveNewAlbumHandler} className="add-album-form" style={{ margin: '20px 0', padding: '15px', border: '1px dashed #007bff' }}>
-                <input 
-                    type="text" 
-                    placeholder="Enter album title..." 
-                    value={newAlbumTitle}
-                    onChange={(e) => setNewAlbumTitle(e.target.value)}
-                    required 
-                    autoFocus
-                />
-                <button type="submit" disabled={isLoading}>
-                    {isLoading ? "Saving..." : "Save Album"}
-                </button>
-            </form>
-        )}
+      {/* הטופס עצמו */}
+      {isCreating && (
+        <form onSubmit={saveNewAlbumHandler} className="add-album-form" style={{ margin: '20px 0', padding: '15px', border: '1px dashed #007bff' }}>
+          <input
+            type="text"
+            placeholder="Enter album title..."
+            value={newAlbumTitle}
+            onChange={(e) => setNewAlbumTitle(e.target.value)}
+            required
+            autoFocus
+          />
+          <button type="submit" disabled={isLoading}>
+            {isLoading ? "Saving..." : "Save Album"}
+          </button>
+        </form>
+      )}
 
       {/* ממשק חיפוש בסיסי */}
       <div className="search-container">

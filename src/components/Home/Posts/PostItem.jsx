@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Comments from "./Comments/Comments"
+import { Link, useNavigate, useParams} from "react-router-dom";
 
 const PostItem = ({
   post,
@@ -8,9 +9,12 @@ const PostItem = ({
   onDelete,
   onSaveEdit
 }) => {
+  const navigate = useNavigate();
   const [editingField, setEditingField] = useState(null); // "title" או "body"
   const [draftValue, setDraftValue] = useState("");
   const [showComments, setShowComments] = useState(false);
+  const { userId } = useParams();
+
   const startEditing = (field) => {
     setEditingField(field);
     setDraftValue(post[field] ?? "");
@@ -29,6 +33,7 @@ const PostItem = ({
 
   const isSelected = selectedPost?.id === post.id;
 
+  
   return (
     <li className={`post-item ${isSelected ? "selected" : ""}`}>
       <span><strong>{post.id}</strong></span>
@@ -55,13 +60,16 @@ const PostItem = ({
         </div>
       )}
       {isSelected && (
-        <button onClick={() => onSelect(null)}>
+        <button onClick={() => navigate(`/users/${userId}/posts`)}>
           סגור פוסט
         </button>
       )}
 
-      <button onClick={() => onSelect(post)}>הצג</button>
-      {!editingField && <button onClick={() => startEditing("title")}>ערוך כותרת</button>}
+      {!isSelected && (
+        <Link to={`/users/${userId}/posts/${post.id}`}>
+          <button>הצג</button>
+        </Link>
+      )}      {!editingField && <button onClick={() => startEditing("title")}>ערוך כותרת</button>}
       {!editingField && <button onClick={() => startEditing("body")}>ערוך תוכן</button>}
       <button onClick={() => onDelete(post.id)}>מחק</button>
 

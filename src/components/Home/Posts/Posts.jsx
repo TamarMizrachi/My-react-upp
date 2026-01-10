@@ -5,8 +5,10 @@ import { apiRequest } from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
 // import "../Posts/Posts.css";
 import PostItem from "./PostItem";
+import { useParams } from "react-router-dom";
 
 const Posts = () => {
+
 
   const postsReducer = (state, action) => {
     switch (action.type) {
@@ -18,16 +20,19 @@ const Posts = () => {
     }
   };
 
+  const { userId, postId } = useParams(); // שליפת הפרמטרים מה-URL
   const { user } = useAuth();
   const { sendRequest, isLoading, error } = useHttp();
   const [creatingPost, setCreatingPost] = useState(false);
   const [newPostTitle, setNewPostTitle] = useState("");
   const [newPostBody, setNewPostBody] = useState("");
-  const [selectedPost, setSelectedPost] = useState(null);
+  // const [selectedPost, setSelectedPost] = useState(null);
   const [posts, dispatch] = useReducer(postsReducer, []);
   const [searchType, setSearchType] = useState("title");
   const [searchValue, setSearchValue] = useState("");
   const [showAllPosts, setShowAllPosts] = useState(false);
+
+  const selectedPost = posts.find(p => String(p.id) === postId);
 
   useEffect(() => {
     if (!user?.id) return;
@@ -38,24 +43,12 @@ const Posts = () => {
       const filteredPosts = showAllPosts
         ? data
         : data.filter(p => String(p.userId) === String(user.id));
-      dispatch({ type: "SET", payload: filteredPosts  });
+      dispatch({ type: "SET", payload: filteredPosts });
     };
 
     fetchPosts();
   }, [sendRequest, user?.id, showAllPosts]);
 
-  // useEffect(() => {
-  //   if (!user?.id) return;
-
-  //   const fetchPosts = async () => {
-  //     const data = await sendRequest(() =>
-  //       apiRequest(`/posts?userId=${user.id}`)
-  //     );
-  //     dispatch({ type: "SET", payload: data });
-  //   };
-
-  //   fetchPosts();
-  // }, [sendRequest, user?.id]);
 
   const saveNewPostHandler = async () => {
     if (!newPostTitle.trim()) return;
@@ -93,7 +86,7 @@ const Posts = () => {
         })
       );
       dispatch({ type: "UPDATE", payload: updated });
-      if (selectedPost?.id === id) setSelectedPost(updated);
+      // if (selectedPost?.id === id) setSelectedPost(updated);
     } catch (err) {
       console.error("Error updating post", err);
     }
@@ -117,7 +110,7 @@ const Posts = () => {
   return (
 
     <section className="posts-page page-content" >
-       <NavBar />
+      <NavBar />
       <h2>Posts של {user?.username}</h2>
 
       {isLoading && <p>טוען פוסטים...</p>}
@@ -176,7 +169,8 @@ const Posts = () => {
             key={post.id}
             post={post}
             selectedPost={selectedPost}
-            onSelect={setSelectedPost}
+            // onSelect={setSelectedPost}
+            onSelect={(p) => navigate(p ? `/users/${userId}/posts/${p.id}` : `/users/${userId}/posts`)}
             onDelete={deletePostsHandler}
             onSaveEdit={updatePost}
 
