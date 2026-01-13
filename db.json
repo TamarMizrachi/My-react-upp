@@ -206,6 +206,29 @@
         "catchPhrase": "Yael",
         "bs": "Yael"
       }
+    },
+    {
+      "id": "2c59",
+      "username": "שלומצי",
+      "website": "123",
+      "name": "",
+      "email": "S@fhd",
+      "address": {
+        "street": "שלומצי",
+        "suite": "שלומצי",
+        "city": "שלומצי",
+        "zipcode": "71919",
+        "geo": {
+          "lat": "שלומצי",
+          "lng": "שלומצי"
+        }
+      },
+      "phone": "0527132203",
+      "company": {
+        "name": "שלומצי",
+        "catchPhrase": "שלומצי",
+        "bs": "שלומצי"
+      }
     }
   ],
   "todos": [
@@ -284,7 +307,7 @@
     {
       "id": "5529",
       "title": "בלבלה",
-      "completed": false,
+      "completed": true,
       "userId": "7876"
     }
   ],
@@ -338,10 +361,16 @@
       "userId": "01e2"
     },
     {
-      "id": "5adb",
-      "title": "פםחןיוע",
-      "body": "פלםחןיועכס",
-      "userId": "01e2"
+      "id": "96c2",
+      "title": "אולי זה עובד?",
+      "body": "ד' תעזור שאני לא יסתבך יותר",
+      "userId": "7876"
+    },
+    {
+      "id": "d541",
+      "title": "b",
+      "body": "זהו גמרנו!!",
+      "userId": "7876"
     }
   ],
   "albums": [
@@ -366,14 +395,14 @@
       "title": "nihil qui omnis"
     },
     {
-      "id": "ee4b",
-      "title": "אלבום חדשש",
-      "userId": "01e2"
+      "id": "8103",
+      "title": "אלבום חדש",
+      "userId": "7876"
     },
     {
-      "id": "ec5d",
-      "title": "lkjhbv",
-      "userId": "01e2"
+      "id": "58ce",
+      "title": "ניסיון",
+      "userId": "7876"
     }
   ],
   "photos": [
@@ -406,67 +435,60 @@
       "thumbnailUrl": "https://via.placeholder.com/150/224566"
     },
     {
-      "id": "033c",
-      "albumId": 1,
-      "title": "Tamaroosh",
-      "url": "http://localhost:5173/albums/1/photos",
-      "thumbnailUrl": "http://localhost:5173/albums/1/photos"
+      "id": "b886",
+      "albumId": "2d8c",
+      "title": "ניסיון ראשון",
+      "url": "@כבע",
+      "thumbnailUrl": "@כבע"
     },
     {
-      "id": "fe02",
-      "albumId": 1,
-      "title": "Yael",
-      "url": "http://localhost:5173/albums/1/photos",
-      "thumbnailUrl": "http://localhost:5173/albums/1/photos"
+      "id": "9375",
+      "albumId": "2d8c",
+      "title": "ע",
+      "url": "ע",
+      "thumbnailUrl": "ע"
     },
     {
-      "id": "c7f3",
-      "albumId": 1,
-      "title": "Yehudadoosh",
-      "url": "http://localhost:5173/albums/1/photos",
-      "thumbnailUrl": "http://localhost:5173/albums/1/photos"
+      "id": "7e75",
+      "albumId": "2d8c",
+      "title": "י",
+      "url": "י",
+      "thumbnailUrl": "י"
     },
     {
-      "id": "bc18",
-      "albumId": 1,
-      "title": "יהודהדה",
-      "url": "http://localhost:5173/albums/1/photos",
-      "thumbnailUrl": "http://localhost:5173/albums/1/photos"
+      "id": "50ab",
+      "albumId": "2d8c",
+      "title": "ח",
+      "url": "ח",
+      "thumbnailUrl": "ח"
     },
     {
-      "id": "0f8f",
-      "albumId": 1,
-      "title": "5",
-      "url": "import { useEffect, useState, useCallback } from \"react\"; import { useParams } from \"react-router-dom\"; import { useHttp } from \"../../../../hook/useHttp\"; import { apiRequest } from \"../../../../services/api\"; import PhotoItem from \"./PhotoItem\"  const Photos = () => {     const { albumId } = useParams();     const { sendRequest, isLoading } = useHttp();      const [photos, setPhotos] = useState([]); // כאן נשמור את כל התמונות שנצברו     const [page, setPage] = useState(1);      // מעקב אחרי הדף הנוכחי     const [hasMore, setHasMore] = useState(true); // האם יש עוד תמונות בשרת?      const LIMIT = 3; // נביא 10 תמונות בכל פעם      const [isAdding, setIsAdding] = useState(false);     const [newPhoto, setNewPhoto] = useState({ title: \"\", url: \"\" });      const fetchPhotos = useCallback(async (pageNum) => {         const url = `/photos?albumId=${albumId}&_page=${pageNum}&_limit=${LIMIT}`;          try {             const data = await sendRequest(() => apiRequest(url));              if (data.length === 0) {                 setHasMore(false);                 return;             }              setPhotos(prevPhotos => {                 // סינון: קח רק תמונות שה-ID שלהן לא נמצא כבר ב-prevPhotos                 const uniqueNewPhotos = data.filter(                     newPhoto => !prevPhotos.some(existingPhoto => existingPhoto.id === newPhoto.id)                 );                 return [...prevPhotos, ...uniqueNewPhotos];             });              if (data.length < LIMIT) {                 setHasMore(false);             }         } catch (err) {             console.error(\"Error fetching photos\", err);         }     }, [albumId, sendRequest]);     // טעינה ראשונית     useEffect(() => {         setPhotos([]); // איפוס תמונות במעבר בין אלבומים         setPage(1);         setHasMore(true);         fetchPhotos(1);     }, [albumId, fetchPhotos]);      const loadMoreHandler = () => {         const nextPage = page + 1;         setPage(nextPage);         fetchPhotos(nextPage);     };      const addPhotoHandler = async (e) => {         e.preventDefault();         try {             const createdPhoto = await sendRequest(() =>                 apiRequest(\"/photos\", {                     method: \"POST\",                     body: {                         albumId: Number(albumId),                         title: newPhoto.title,                         url: newPhoto.url,                         thumbnailUrl: newPhoto.url // לצורך הפשטות נשתמש באותו לינק                     }                 })             );              // הוספת התמונה החדשה לראש הרשימה             setPhotos(prev => [createdPhoto, ...prev]);             setIsAdding(false);             setNewPhoto({ title: \"\", url: \"\" });         } catch (err) {             console.error(\"Failed to add photo\", err);         }     };      const handleDataChange = (action) => {         if (action.type === \"DELETE\") {             setPhotos(prev => prev.filter(p => p.id !== action.payload));         } else if (action.type === \"UPDATE\") {             setPhotos(prev => prev.map(p => p.id === action.payload.id ? action.payload : p));         }     };      return (         <section className=\"photos-page\">             <h2>Photos for Album {albumId}</h2>              {/* טופס הוספה */}             <button onClick={() => setIsAdding(!isAdding)}>                 {isAdding ? \"Cancel\" : \"Add New Photo\"}             </button>              {isAdding && (                 <form onSubmit={addPhotoHandler} style={{ margin: '20px 0', border: '1px solid #ddd', padding: '15px' }}>                     <input                         type=\"text\"                         placeholder=\"Photo Title\"                         value={newPhoto.title}                         onChange={(e) => setNewPhoto({ ...newPhoto, title: e.target.value })}                         required                     />                     <input                         type=\"text\"                         placeholder=\"Image URL\"                         value={newPhoto.url}                         onChange={(e) => setNewPhoto({ ...newPhoto, url: e.target.value })}                         required                     />                     <button type=\"submit\">Save Photo</button>                 </form>             )}               {/* רשימת התמונות */}             <div className=\"photos-grid\" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>                 {photos.map(photo => (                     <PhotoItem                         key={photo.id}                         photo={photo}                         onDataChange={handleDataChange}                     />                 ))}             </div>              {/* בדיקה: האם יש עוד תמונות והאם אנחנו לא באמצע טעינה */}             {hasMore ? (                 <div style={{ textAlign: 'center', margin: '30px 0' }}>                     <button                         onClick={loadMoreHandler}                         disabled={isLoading}                                            >                         {isLoading ? \"טוען...\" : \"טען עוד תמונות\"}                     </button>                 </div>             ) : (                 <p style={{ textAlign: 'center', color: '#666', margin: '20px 0' }}>                     ✨ הגעת לסוף האלבום - אין תמונות נוספות ✨                 </p>             )}         </section>     ); };  export default Photos;",
-      "thumbnailUrl": "import { useEffect, useState, useCallback } from \"react\"; import { useParams } from \"react-router-dom\"; import { useHttp } from \"../../../../hook/useHttp\"; import { apiRequest } from \"../../../../services/api\"; import PhotoItem from \"./PhotoItem\"  const Photos = () => {     const { albumId } = useParams();     const { sendRequest, isLoading } = useHttp();      const [photos, setPhotos] = useState([]); // כאן נשמור את כל התמונות שנצברו     const [page, setPage] = useState(1);      // מעקב אחרי הדף הנוכחי     const [hasMore, setHasMore] = useState(true); // האם יש עוד תמונות בשרת?      const LIMIT = 3; // נביא 10 תמונות בכל פעם      const [isAdding, setIsAdding] = useState(false);     const [newPhoto, setNewPhoto] = useState({ title: \"\", url: \"\" });      const fetchPhotos = useCallback(async (pageNum) => {         const url = `/photos?albumId=${albumId}&_page=${pageNum}&_limit=${LIMIT}`;          try {             const data = await sendRequest(() => apiRequest(url));              if (data.length === 0) {                 setHasMore(false);                 return;             }              setPhotos(prevPhotos => {                 // סינון: קח רק תמונות שה-ID שלהן לא נמצא כבר ב-prevPhotos                 const uniqueNewPhotos = data.filter(                     newPhoto => !prevPhotos.some(existingPhoto => existingPhoto.id === newPhoto.id)                 );                 return [...prevPhotos, ...uniqueNewPhotos];             });              if (data.length < LIMIT) {                 setHasMore(false);             }         } catch (err) {             console.error(\"Error fetching photos\", err);         }     }, [albumId, sendRequest]);     // טעינה ראשונית     useEffect(() => {         setPhotos([]); // איפוס תמונות במעבר בין אלבומים         setPage(1);         setHasMore(true);         fetchPhotos(1);     }, [albumId, fetchPhotos]);      const loadMoreHandler = () => {         const nextPage = page + 1;         setPage(nextPage);         fetchPhotos(nextPage);     };      const addPhotoHandler = async (e) => {         e.preventDefault();         try {             const createdPhoto = await sendRequest(() =>                 apiRequest(\"/photos\", {                     method: \"POST\",                     body: {                         albumId: Number(albumId),                         title: newPhoto.title,                         url: newPhoto.url,                         thumbnailUrl: newPhoto.url // לצורך הפשטות נשתמש באותו לינק                     }                 })             );              // הוספת התמונה החדשה לראש הרשימה             setPhotos(prev => [createdPhoto, ...prev]);             setIsAdding(false);             setNewPhoto({ title: \"\", url: \"\" });         } catch (err) {             console.error(\"Failed to add photo\", err);         }     };      const handleDataChange = (action) => {         if (action.type === \"DELETE\") {             setPhotos(prev => prev.filter(p => p.id !== action.payload));         } else if (action.type === \"UPDATE\") {             setPhotos(prev => prev.map(p => p.id === action.payload.id ? action.payload : p));         }     };      return (         <section className=\"photos-page\">             <h2>Photos for Album {albumId}</h2>              {/* טופס הוספה */}             <button onClick={() => setIsAdding(!isAdding)}>                 {isAdding ? \"Cancel\" : \"Add New Photo\"}             </button>              {isAdding && (                 <form onSubmit={addPhotoHandler} style={{ margin: '20px 0', border: '1px solid #ddd', padding: '15px' }}>                     <input                         type=\"text\"                         placeholder=\"Photo Title\"                         value={newPhoto.title}                         onChange={(e) => setNewPhoto({ ...newPhoto, title: e.target.value })}                         required                     />                     <input                         type=\"text\"                         placeholder=\"Image URL\"                         value={newPhoto.url}                         onChange={(e) => setNewPhoto({ ...newPhoto, url: e.target.value })}                         required                     />                     <button type=\"submit\">Save Photo</button>                 </form>             )}               {/* רשימת התמונות */}             <div className=\"photos-grid\" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>                 {photos.map(photo => (                     <PhotoItem                         key={photo.id}                         photo={photo}                         onDataChange={handleDataChange}                     />                 ))}             </div>              {/* בדיקה: האם יש עוד תמונות והאם אנחנו לא באמצע טעינה */}             {hasMore ? (                 <div style={{ textAlign: 'center', margin: '30px 0' }}>                     <button                         onClick={loadMoreHandler}                         disabled={isLoading}                                            >                         {isLoading ? \"טוען...\" : \"טען עוד תמונות\"}                     </button>                 </div>             ) : (                 <p style={{ textAlign: 'center', color: '#666', margin: '20px 0' }}>                     ✨ הגעת לסוף האלבום - אין תמונות נוספות ✨                 </p>             )}         </section>     ); };  export default Photos;"
+      "id": "e6a8",
+      "albumId": "2d8c",
+      "title": "ל",
+      "url": "https://picsum.photos/id/29/800/600 ",
+      "thumbnailUrl": "https://picsum.photos/id/29/800/600 "
     },
     {
-      "id": "1443",
-      "albumId": 1,
-      "title": "6",
-      "url": "import { useEffect, useState, useCallback } from \"react\"; import { useParams } from \"react-router-dom\"; import { useHttp } from \"../../../../hook/useHttp\"; import { apiRequest } from \"../../../../services/api\"; import PhotoItem from \"./PhotoItem\"  const Photos = () => {     const { albumId } = useParams();     const { sendRequest, isLoading } = useHttp();      const [photos, setPhotos] = useState([]); // כאן נשמור את כל התמונות שנצברו     const [page, setPage] = useState(1);      // מעקב אחרי הדף הנוכחי     const [hasMore, setHasMore] = useState(true); // האם יש עוד תמונות בשרת?      const LIMIT = 3; // נביא 10 תמונות בכל פעם      const [isAdding, setIsAdding] = useState(false);     const [newPhoto, setNewPhoto] = useState({ title: \"\", url: \"\" });      const fetchPhotos = useCallback(async (pageNum) => {         const url = `/photos?albumId=${albumId}&_page=${pageNum}&_limit=${LIMIT}`;          try {             const data = await sendRequest(() => apiRequest(url));              if (data.length === 0) {                 setHasMore(false);                 return;             }              setPhotos(prevPhotos => {                 // סינון: קח רק תמונות שה-ID שלהן לא נמצא כבר ב-prevPhotos                 const uniqueNewPhotos = data.filter(                     newPhoto => !prevPhotos.some(existingPhoto => existingPhoto.id === newPhoto.id)                 );                 return [...prevPhotos, ...uniqueNewPhotos];             });              if (data.length < LIMIT) {                 setHasMore(false);             }         } catch (err) {             console.error(\"Error fetching photos\", err);         }     }, [albumId, sendRequest]);     // טעינה ראשונית     useEffect(() => {         setPhotos([]); // איפוס תמונות במעבר בין אלבומים         setPage(1);         setHasMore(true);         fetchPhotos(1);     }, [albumId, fetchPhotos]);      const loadMoreHandler = () => {         const nextPage = page + 1;         setPage(nextPage);         fetchPhotos(nextPage);     };      const addPhotoHandler = async (e) => {         e.preventDefault();         try {             const createdPhoto = await sendRequest(() =>                 apiRequest(\"/photos\", {                     method: \"POST\",                     body: {                         albumId: Number(albumId),                         title: newPhoto.title,                         url: newPhoto.url,                         thumbnailUrl: newPhoto.url // לצורך הפשטות נשתמש באותו לינק                     }                 })             );              // הוספת התמונה החדשה לראש הרשימה             setPhotos(prev => [createdPhoto, ...prev]);             setIsAdding(false);             setNewPhoto({ title: \"\", url: \"\" });         } catch (err) {             console.error(\"Failed to add photo\", err);         }     };      const handleDataChange = (action) => {         if (action.type === \"DELETE\") {             setPhotos(prev => prev.filter(p => p.id !== action.payload));         } else if (action.type === \"UPDATE\") {             setPhotos(prev => prev.map(p => p.id === action.payload.id ? action.payload : p));         }     };      return (         <section className=\"photos-page\">             <h2>Photos for Album {albumId}</h2>              {/* טופס הוספה */}             <button onClick={() => setIsAdding(!isAdding)}>                 {isAdding ? \"Cancel\" : \"Add New Photo\"}             </button>              {isAdding && (                 <form onSubmit={addPhotoHandler} style={{ margin: '20px 0', border: '1px solid #ddd', padding: '15px' }}>                     <input                         type=\"text\"                         placeholder=\"Photo Title\"                         value={newPhoto.title}                         onChange={(e) => setNewPhoto({ ...newPhoto, title: e.target.value })}                         required                     />                     <input                         type=\"text\"                         placeholder=\"Image URL\"                         value={newPhoto.url}                         onChange={(e) => setNewPhoto({ ...newPhoto, url: e.target.value })}                         required                     />                     <button type=\"submit\">Save Photo</button>                 </form>             )}               {/* רשימת התמונות */}             <div className=\"photos-grid\" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>                 {photos.map(photo => (                     <PhotoItem                         key={photo.id}                         photo={photo}                         onDataChange={handleDataChange}                     />                 ))}             </div>              {/* בדיקה: האם יש עוד תמונות והאם אנחנו לא באמצע טעינה */}             {hasMore ? (                 <div style={{ textAlign: 'center', margin: '30px 0' }}>                     <button                         onClick={loadMoreHandler}                         disabled={isLoading}                                            >                         {isLoading ? \"טוען...\" : \"טען עוד תמונות\"}                     </button>                 </div>             ) : (                 <p style={{ textAlign: 'center', color: '#666', margin: '20px 0' }}>                     ✨ הגעת לסוף האלבום - אין תמונות נוספות ✨                 </p>             )}         </section>     ); };  export default Photos;",
-      "thumbnailUrl": "import { useEffect, useState, useCallback } from \"react\"; import { useParams } from \"react-router-dom\"; import { useHttp } from \"../../../../hook/useHttp\"; import { apiRequest } from \"../../../../services/api\"; import PhotoItem from \"./PhotoItem\"  const Photos = () => {     const { albumId } = useParams();     const { sendRequest, isLoading } = useHttp();      const [photos, setPhotos] = useState([]); // כאן נשמור את כל התמונות שנצברו     const [page, setPage] = useState(1);      // מעקב אחרי הדף הנוכחי     const [hasMore, setHasMore] = useState(true); // האם יש עוד תמונות בשרת?      const LIMIT = 3; // נביא 10 תמונות בכל פעם      const [isAdding, setIsAdding] = useState(false);     const [newPhoto, setNewPhoto] = useState({ title: \"\", url: \"\" });      const fetchPhotos = useCallback(async (pageNum) => {         const url = `/photos?albumId=${albumId}&_page=${pageNum}&_limit=${LIMIT}`;          try {             const data = await sendRequest(() => apiRequest(url));              if (data.length === 0) {                 setHasMore(false);                 return;             }              setPhotos(prevPhotos => {                 // סינון: קח רק תמונות שה-ID שלהן לא נמצא כבר ב-prevPhotos                 const uniqueNewPhotos = data.filter(                     newPhoto => !prevPhotos.some(existingPhoto => existingPhoto.id === newPhoto.id)                 );                 return [...prevPhotos, ...uniqueNewPhotos];             });              if (data.length < LIMIT) {                 setHasMore(false);             }         } catch (err) {             console.error(\"Error fetching photos\", err);         }     }, [albumId, sendRequest]);     // טעינה ראשונית     useEffect(() => {         setPhotos([]); // איפוס תמונות במעבר בין אלבומים         setPage(1);         setHasMore(true);         fetchPhotos(1);     }, [albumId, fetchPhotos]);      const loadMoreHandler = () => {         const nextPage = page + 1;         setPage(nextPage);         fetchPhotos(nextPage);     };      const addPhotoHandler = async (e) => {         e.preventDefault();         try {             const createdPhoto = await sendRequest(() =>                 apiRequest(\"/photos\", {                     method: \"POST\",                     body: {                         albumId: Number(albumId),                         title: newPhoto.title,                         url: newPhoto.url,                         thumbnailUrl: newPhoto.url // לצורך הפשטות נשתמש באותו לינק                     }                 })             );              // הוספת התמונה החדשה לראש הרשימה             setPhotos(prev => [createdPhoto, ...prev]);             setIsAdding(false);             setNewPhoto({ title: \"\", url: \"\" });         } catch (err) {             console.error(\"Failed to add photo\", err);         }     };      const handleDataChange = (action) => {         if (action.type === \"DELETE\") {             setPhotos(prev => prev.filter(p => p.id !== action.payload));         } else if (action.type === \"UPDATE\") {             setPhotos(prev => prev.map(p => p.id === action.payload.id ? action.payload : p));         }     };      return (         <section className=\"photos-page\">             <h2>Photos for Album {albumId}</h2>              {/* טופס הוספה */}             <button onClick={() => setIsAdding(!isAdding)}>                 {isAdding ? \"Cancel\" : \"Add New Photo\"}             </button>              {isAdding && (                 <form onSubmit={addPhotoHandler} style={{ margin: '20px 0', border: '1px solid #ddd', padding: '15px' }}>                     <input                         type=\"text\"                         placeholder=\"Photo Title\"                         value={newPhoto.title}                         onChange={(e) => setNewPhoto({ ...newPhoto, title: e.target.value })}                         required                     />                     <input                         type=\"text\"                         placeholder=\"Image URL\"                         value={newPhoto.url}                         onChange={(e) => setNewPhoto({ ...newPhoto, url: e.target.value })}                         required                     />                     <button type=\"submit\">Save Photo</button>                 </form>             )}               {/* רשימת התמונות */}             <div className=\"photos-grid\" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>                 {photos.map(photo => (                     <PhotoItem                         key={photo.id}                         photo={photo}                         onDataChange={handleDataChange}                     />                 ))}             </div>              {/* בדיקה: האם יש עוד תמונות והאם אנחנו לא באמצע טעינה */}             {hasMore ? (                 <div style={{ textAlign: 'center', margin: '30px 0' }}>                     <button                         onClick={loadMoreHandler}                         disabled={isLoading}                                            >                         {isLoading ? \"טוען...\" : \"טען עוד תמונות\"}                     </button>                 </div>             ) : (                 <p style={{ textAlign: 'center', color: '#666', margin: '20px 0' }}>                     ✨ הגעת לסוף האלבום - אין תמונות נוספות ✨                 </p>             )}         </section>     ); };  export default Photos;"
+      "id": "c543",
+      "albumId": "2d8c",
+      "title": "ךך",
+      "url": "https://picsum.photos/id/1016/800/600 ",
+      "thumbnailUrl": "https://picsum.photos/id/1016/800/600 "
     },
     {
-      "id": "369a",
-      "albumId": 1,
-      "title": "7",
-      "url": "import { useEffect, useState, useCallback } from \"react\"; import { useParams } from \"react-router-dom\"; import { useHttp } from \"../../../../hook/useHttp\"; import { apiRequest } from \"../../../../services/api\"; import PhotoItem from \"./PhotoItem\"  const Photos = () => {     const { albumId } = useParams();     const { sendRequest, isLoading } = useHttp();      const [photos, setPhotos] = useState([]); // כאן נשמור את כל התמונות שנצברו     const [page, setPage] = useState(1);      // מעקב אחרי הדף הנוכחי     const [hasMore, setHasMore] = useState(true); // האם יש עוד תמונות בשרת?      const LIMIT = 3; // נביא 10 תמונות בכל פעם      const [isAdding, setIsAdding] = useState(false);     const [newPhoto, setNewPhoto] = useState({ title: \"\", url: \"\" });      const fetchPhotos = useCallback(async (pageNum) => {         const url = `/photos?albumId=${albumId}&_page=${pageNum}&_limit=${LIMIT}`;          try {             const data = await sendRequest(() => apiRequest(url));              if (data.length === 0) {                 setHasMore(false);                 return;             }              setPhotos(prevPhotos => {                 // סינון: קח רק תמונות שה-ID שלהן לא נמצא כבר ב-prevPhotos                 const uniqueNewPhotos = data.filter(                     newPhoto => !prevPhotos.some(existingPhoto => existingPhoto.id === newPhoto.id)                 );                 return [...prevPhotos, ...uniqueNewPhotos];             });              if (data.length < LIMIT) {                 setHasMore(false);             }         } catch (err) {             console.error(\"Error fetching photos\", err);         }     }, [albumId, sendRequest]);     // טעינה ראשונית     useEffect(() => {         setPhotos([]); // איפוס תמונות במעבר בין אלבומים         setPage(1);         setHasMore(true);         fetchPhotos(1);     }, [albumId, fetchPhotos]);      const loadMoreHandler = () => {         const nextPage = page + 1;         setPage(nextPage);         fetchPhotos(nextPage);     };      const addPhotoHandler = async (e) => {         e.preventDefault();         try {             const createdPhoto = await sendRequest(() =>                 apiRequest(\"/photos\", {                     method: \"POST\",                     body: {                         albumId: Number(albumId),                         title: newPhoto.title,                         url: newPhoto.url,                         thumbnailUrl: newPhoto.url // לצורך הפשטות נשתמש באותו לינק                     }                 })             );              // הוספת התמונה החדשה לראש הרשימה             setPhotos(prev => [createdPhoto, ...prev]);             setIsAdding(false);             setNewPhoto({ title: \"\", url: \"\" });         } catch (err) {             console.error(\"Failed to add photo\", err);         }     };      const handleDataChange = (action) => {         if (action.type === \"DELETE\") {             setPhotos(prev => prev.filter(p => p.id !== action.payload));         } else if (action.type === \"UPDATE\") {             setPhotos(prev => prev.map(p => p.id === action.payload.id ? action.payload : p));         }     };      return (         <section className=\"photos-page\">             <h2>Photos for Album {albumId}</h2>              {/* טופס הוספה */}             <button onClick={() => setIsAdding(!isAdding)}>                 {isAdding ? \"Cancel\" : \"Add New Photo\"}             </button>              {isAdding && (                 <form onSubmit={addPhotoHandler} style={{ margin: '20px 0', border: '1px solid #ddd', padding: '15px' }}>                     <input                         type=\"text\"                         placeholder=\"Photo Title\"                         value={newPhoto.title}                         onChange={(e) => setNewPhoto({ ...newPhoto, title: e.target.value })}                         required                     />                     <input                         type=\"text\"                         placeholder=\"Image URL\"                         value={newPhoto.url}                         onChange={(e) => setNewPhoto({ ...newPhoto, url: e.target.value })}                         required                     />                     <button type=\"submit\">Save Photo</button>                 </form>             )}               {/* רשימת התמונות */}             <div className=\"photos-grid\" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>                 {photos.map(photo => (                     <PhotoItem                         key={photo.id}                         photo={photo}                         onDataChange={handleDataChange}                     />                 ))}             </div>              {/* בדיקה: האם יש עוד תמונות והאם אנחנו לא באמצע טעינה */}             {hasMore ? (                 <div style={{ textAlign: 'center', margin: '30px 0' }}>                     <button                         onClick={loadMoreHandler}                         disabled={isLoading}                                            >                         {isLoading ? \"טוען...\" : \"טען עוד תמונות\"}                     </button>                 </div>             ) : (                 <p style={{ textAlign: 'center', color: '#666', margin: '20px 0' }}>                     ✨ הגעת לסוף האלבום - אין תמונות נוספות ✨                 </p>             )}         </section>     ); };  export default Photos;",
-      "thumbnailUrl": "import { useEffect, useState, useCallback } from \"react\"; import { useParams } from \"react-router-dom\"; import { useHttp } from \"../../../../hook/useHttp\"; import { apiRequest } from \"../../../../services/api\"; import PhotoItem from \"./PhotoItem\"  const Photos = () => {     const { albumId } = useParams();     const { sendRequest, isLoading } = useHttp();      const [photos, setPhotos] = useState([]); // כאן נשמור את כל התמונות שנצברו     const [page, setPage] = useState(1);      // מעקב אחרי הדף הנוכחי     const [hasMore, setHasMore] = useState(true); // האם יש עוד תמונות בשרת?      const LIMIT = 3; // נביא 10 תמונות בכל פעם      const [isAdding, setIsAdding] = useState(false);     const [newPhoto, setNewPhoto] = useState({ title: \"\", url: \"\" });      const fetchPhotos = useCallback(async (pageNum) => {         const url = `/photos?albumId=${albumId}&_page=${pageNum}&_limit=${LIMIT}`;          try {             const data = await sendRequest(() => apiRequest(url));              if (data.length === 0) {                 setHasMore(false);                 return;             }              setPhotos(prevPhotos => {                 // סינון: קח רק תמונות שה-ID שלהן לא נמצא כבר ב-prevPhotos                 const uniqueNewPhotos = data.filter(                     newPhoto => !prevPhotos.some(existingPhoto => existingPhoto.id === newPhoto.id)                 );                 return [...prevPhotos, ...uniqueNewPhotos];             });              if (data.length < LIMIT) {                 setHasMore(false);             }         } catch (err) {             console.error(\"Error fetching photos\", err);         }     }, [albumId, sendRequest]);     // טעינה ראשונית     useEffect(() => {         setPhotos([]); // איפוס תמונות במעבר בין אלבומים         setPage(1);         setHasMore(true);         fetchPhotos(1);     }, [albumId, fetchPhotos]);      const loadMoreHandler = () => {         const nextPage = page + 1;         setPage(nextPage);         fetchPhotos(nextPage);     };      const addPhotoHandler = async (e) => {         e.preventDefault();         try {             const createdPhoto = await sendRequest(() =>                 apiRequest(\"/photos\", {                     method: \"POST\",                     body: {                         albumId: Number(albumId),                         title: newPhoto.title,                         url: newPhoto.url,                         thumbnailUrl: newPhoto.url // לצורך הפשטות נשתמש באותו לינק                     }                 })             );              // הוספת התמונה החדשה לראש הרשימה             setPhotos(prev => [createdPhoto, ...prev]);             setIsAdding(false);             setNewPhoto({ title: \"\", url: \"\" });         } catch (err) {             console.error(\"Failed to add photo\", err);         }     };      const handleDataChange = (action) => {         if (action.type === \"DELETE\") {             setPhotos(prev => prev.filter(p => p.id !== action.payload));         } else if (action.type === \"UPDATE\") {             setPhotos(prev => prev.map(p => p.id === action.payload.id ? action.payload : p));         }     };      return (         <section className=\"photos-page\">             <h2>Photos for Album {albumId}</h2>              {/* טופס הוספה */}             <button onClick={() => setIsAdding(!isAdding)}>                 {isAdding ? \"Cancel\" : \"Add New Photo\"}             </button>              {isAdding && (                 <form onSubmit={addPhotoHandler} style={{ margin: '20px 0', border: '1px solid #ddd', padding: '15px' }}>                     <input                         type=\"text\"                         placeholder=\"Photo Title\"                         value={newPhoto.title}                         onChange={(e) => setNewPhoto({ ...newPhoto, title: e.target.value })}                         required                     />                     <input                         type=\"text\"                         placeholder=\"Image URL\"                         value={newPhoto.url}                         onChange={(e) => setNewPhoto({ ...newPhoto, url: e.target.value })}                         required                     />                     <button type=\"submit\">Save Photo</button>                 </form>             )}               {/* רשימת התמונות */}             <div className=\"photos-grid\" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>                 {photos.map(photo => (                     <PhotoItem                         key={photo.id}                         photo={photo}                         onDataChange={handleDataChange}                     />                 ))}             </div>              {/* בדיקה: האם יש עוד תמונות והאם אנחנו לא באמצע טעינה */}             {hasMore ? (                 <div style={{ textAlign: 'center', margin: '30px 0' }}>                     <button                         onClick={loadMoreHandler}                         disabled={isLoading}                                            >                         {isLoading ? \"טוען...\" : \"טען עוד תמונות\"}                     </button>                 </div>             ) : (                 <p style={{ textAlign: 'center', color: '#666', margin: '20px 0' }}>                     ✨ הגעת לסוף האלבום - אין תמונות נוספות ✨                 </p>             )}         </section>     ); };  export default Photos;"
+      "id": "a23c",
+      "albumId": "8103",
+      "title": "ח",
+      "url": "https://picsum.photos/id/735/800/600",
+      "thumbnailUrl": "https://picsum.photos/id/735/800/600"
     },
     {
-      "id": "cb1c",
-      "albumId": null,
-      "title": "רכק",
-      "url": "4ראע",
-      "thumbnailUrl": "4ראע"
-    },
-    {
-      "id": "0aa5",
-      "albumId": "ee4b",
-      "title": "נסיוןג",
-      "url": "גג",
-      "thumbnailUrl": "גג"
+      "id": "3b35",
+      "albumId": "8103",
+      "title": "ח",
+      "url": "https://picsum.photos/id/1060/800/600",
+      "thumbnailUrl": "https://picsum.photos/id/1060/800/600"
     }
   ],
   "comments": [
@@ -539,6 +561,48 @@
       "body": "ייי",
       "name": "Tamar",
       "email": "Y67525111@gmail.com"
+    },
+    {
+      "id": "1368",
+      "postId": "1",
+      "body": "האם זה עובד?",
+      "name": "Yael",
+      "email": "Yael"
+    },
+    {
+      "id": "cfc8",
+      "postId": "96c2",
+      "body": "ד' תודה!!",
+      "name": "Yael",
+      "email": "Yael"
+    },
+    {
+      "id": "b101",
+      "postId": "fc16",
+      "body": "!!!!",
+      "name": "Yael",
+      "email": "Yael"
+    },
+    {
+      "id": "6f79",
+      "postId": "2",
+      "body": "כן!!!",
+      "name": "Yael",
+      "email": "Yael"
+    },
+    {
+      "id": "9687",
+      "postId": "d541",
+      "body": "יטעח",
+      "name": "Yael",
+      "email": "Yael"
+    },
+    {
+      "id": "7887",
+      "postId": "13a9",
+      "body": "זה עובד!!!",
+      "name": "Yael",
+      "email": "Yael"
     }
   ]
 }

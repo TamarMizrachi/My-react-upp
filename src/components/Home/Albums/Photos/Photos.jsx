@@ -53,41 +53,41 @@ const Photos = () => {
     };
 
     const addPhotoHandler = async (e) => {
-    e.preventDefault();
-    
-    // בדיקה חשובה: ודאי ש-albumId קיים לפני השליחה
-    if (!albumId) {
-        console.error("No album ID found in URL");
-        return;
-    }
+        e.preventDefault();
 
-    try {
-        const createdPhoto = await sendRequest(() =>
-            apiRequest("/photos", {
-                method: "POST",
-                body: {
-                    // כאן התיקון: ודאי שהשם תואם בדיוק למה שהשרת מצפה
-                    albumId: albumId, 
-                    title: newPhoto.title,
-                    url: newPhoto.url,
-                    thumbnailUrl: newPhoto.url 
-                }
-            })
-        );
+        // בדיקה חשובה: ודאי ש-albumId קיים לפני השליחה
+        if (!albumId) {
+            console.error("No album ID found in URL");
+            return;
+        }
 
-        // הוספה למסך עם ה-ID שחזר מהשרת
-        setPhotos(prev => [createdPhoto, ...prev]);
-        
-        // איפוס הטופס
-        setIsAdding(false);
-        setNewPhoto({ title: "", url: "" });
-        
-    } catch (err) {
-        console.error("Failed to add photo", err);
-    }
-};
+        try {
+            const createdPhoto = await sendRequest(() =>
+                apiRequest("/photos", {
+                    method: "POST",
+                    body: {
+                        // כאן התיקון: ודאי שהשם תואם בדיוק למה שהשרת מצפה
+                        albumId: albumId,
+                        title: newPhoto.title,
+                        url: newPhoto.url,
+                        thumbnailUrl: newPhoto.url
+                    }
+                })
+            );
 
- 
+            // הוספה למסך עם ה-ID שחזר מהשרת
+            setPhotos(prev => [createdPhoto, ...prev]);
+
+            // איפוס הטופס
+            setIsAdding(false);
+            setNewPhoto({ title: "", url: "" });
+
+        } catch (err) {
+            console.error("Failed to add photo", err);
+        }
+    };
+
+
 
     const handleDataChange = (action) => {
         if (action.type === "DELETE") {
@@ -97,17 +97,20 @@ const Photos = () => {
         }
     };
 
+
+
     return (
         <section className="photos-page">
             <h2>Photos for Album {albumId}</h2>
 
-            {/* טופס הוספה */}
-            <button onClick={() => setIsAdding(!isAdding)}>
-                {isAdding ? "Cancel" : "Add New Photo"}
-            </button>
+            <div className="controls">
+                <button onClick={() => setIsAdding(!isAdding)}>
+                    {isAdding ? "Cancel" : "Add New Photo"}
+                </button>
+            </div>
 
             {isAdding && (
-                <form onSubmit={addPhotoHandler} style={{ margin: '20px 0', border: '1px solid #ddd', padding: '15px' }}>
+                <form onSubmit={addPhotoHandler} className="new-post-editor" style={{ margin: '0 auto 30px auto' }}>
                     <input
                         type="text"
                         placeholder="Photo Title"
@@ -128,7 +131,7 @@ const Photos = () => {
 
 
             {/* רשימת התמונות */}
-            <div className="photos-grid" style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(200px, 1fr))', gap: '20px' }}>
+            <div className="photos-grid" >
                 {photos.map(photo => (
                     <PhotoItem
                         key={photo.id}
@@ -140,7 +143,7 @@ const Photos = () => {
 
             {/* בדיקה: האם יש עוד תמונות והאם אנחנו לא באמצע טעינה */}
             {hasMore ? (
-                <div style={{ textAlign: 'center', margin: '30px 0' }}>
+                <div className="controls">
                     <button
                         onClick={loadMoreHandler}
                         disabled={isLoading}
