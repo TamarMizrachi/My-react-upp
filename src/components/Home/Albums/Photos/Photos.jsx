@@ -1,6 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { useParams } from "react-router-dom";
-import { useHttp } from "../../../../hook/useHttp";
+import { useHttp } from "../../../../hooks/useHttp";
 import { apiRequest } from "../../../../services/api";
 import PhotoItem from "./PhotoItem"
 
@@ -55,6 +55,10 @@ const Photos = () => {
     const addPhotoHandler = async (e) => {
         e.preventDefault();
 
+        if (!isValidUrl(newPhoto.url)) {
+        alert("נא להזין כתובת URL תקינה (למשל: https://example.com/image.jpg)");
+        return;
+    }
         // בדיקה חשובה: ודאי ש-albumId קיים לפני השליחה
         if (!albumId) {
             console.error("No album ID found in URL");
@@ -97,7 +101,14 @@ const Photos = () => {
         }
     };
 
-
+    const isValidUrl = (string) => {
+        try {
+            new URL(string);
+            return true;
+        } catch (_) {
+            return false;
+        }
+    };
 
     return (
         <section className="photos-page">

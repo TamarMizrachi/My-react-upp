@@ -1,5 +1,5 @@
 import { useEffect, useReducer, useState } from "react";
-import { useHttp } from "../../../hook/useHttp";
+import { useHttp } from "../../../hooks/useHttp";
 import { apiRequest } from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
 import "../Todos/Todos.css";
@@ -509,7 +509,7 @@ export default function Todos() {
 // import { useEffect, useState } from "react";
 // import { apiRequest } from "../../../services/api";
 // import { useAuth } from "../../../context/AuthContext";
-// import { useHttp } from "../../../hook/useHttp";
+// import { useHttp } from "../../../hooks/useHttp";
 
 // const Todos = () => {
 //   const { user } = useAuth();

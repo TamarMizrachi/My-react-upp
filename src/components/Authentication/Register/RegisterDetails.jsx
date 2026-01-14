@@ -60,29 +60,10 @@ const RegisterDetails = () => {
     try {
       const user = await register(newUser);
 
-<<<<<<< HEAD
-      if (!res.ok) {
-        throw new Error("Registration failed");
-      }
-
-      // --- השינוי המבוקש כאן ---
-      // קבלת המשתמש המלא מהשרת הכולל את ה-ID האמיתי
-      const registeredUser = await res.json();
-
-      // הסרת המשתמש הזמני
-      localStorage.removeItem("pendingUser");
-
-      // שליחת המשתמש עם ה-ID לתוך פונקציית ה-login ששומרת ל-LocalStorage
-      login(registeredUser);
-      // -------------------------
-
-      navigate(`/users/${registeredUser.id}/home`);
-=======
       login(user);
       localStorage.removeItem("pendingUser");
 
       navigate(`/users/${user.id}/home`);
->>>>>>> friend-repo/main
     } catch (err) {
       console.log(err.message);
     }

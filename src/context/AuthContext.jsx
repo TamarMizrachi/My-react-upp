@@ -1,6 +1,6 @@
 import {  createContext, useContext, useState, useEffect } from "react";
 import { apiRequest } from "../services/api";
-import { useHttp } from "../hook/useHttp";
+import { useHttp } from "../hooks/useHttp";
 
 const AuthContext = createContext();
 

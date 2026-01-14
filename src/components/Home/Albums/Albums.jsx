@@ -1,6 +1,6 @@
 import { useEffect, useReducer, useState } from "react";
 // import NavBar from "../../NavBar/NavBar";
-import { useHttp } from "../../../hook/useHttp";
+import { useHttp } from "../../../hooks/useHttp";
 import { apiRequest } from "../../../services/api";
 import { useAuth } from "../../../context/AuthContext";
 import AlbumItem from "./AlbumItem";

@@ -1,0 +1,138 @@
+/* --- Auth.css - גרסה סופית הכוללת הכל --- */
+
+/* 1. מרכוז ברזל לכל העמודים (מונע מה-NavBar להזיז אותם) */
+.auth-page, .authentication-container, .register-details-page {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    background: transparent; /* מאפשר לרקע הכללי של האתר להיראות */
+}
+
+/* 2. הכרטיס המרכזי (הקופסה החומה) - כולל הגדרות גלילה */
+.auth-card {
+    background: rgba(176, 137, 104, 0.96); /* חום בהיר יוקרתי */
+    padding: 35px 40px;
+    width: 420px;
+    max-width: 90%;
+    
+    /* פתרון הגלילה לעמוד RegisterDetails הארוך */
+    max-height: 85vh; 
+    overflow-y: auto; 
+    
+    border-radius: 30px;
+    border: 3px solid #4E342E;
+    box-shadow: 15px 15px 35px rgba(0, 0, 0, 0.3);
+    text-align: center;
+    box-sizing: border-box;
+    scrollbar-gutter: stable; /* מונע מהתוכן לרעוד כשהפס מופיע */
+}
+
+/* 3. עיצוב פס הגלילה הפנימי (כדי שיהיה חתיך וחום) */
+.auth-card::-webkit-scrollbar {
+    width: 8px;
+}
+.auth-card::-webkit-scrollbar-track {
+    background: rgba(250, 243, 224, 0.2);
+    border-radius: 10px;
+}
+.auth-card::-webkit-scrollbar-thumb {
+    background: #4E342E; /* פס חום כהה */
+    border-radius: 10px;
+}
+
+/* 4. עיצוב הכותרות */
+.auth-card h2 {
+    color: #FAF3E0; /* שמנת */
+    font-family: 'Assistant', sans-serif;
+    font-size: 2.5rem;
+    margin-bottom: 25px;
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+}
+
+/* כותרת Welcome ספציפית למסך הבחירה */
+.authentication-container h2 {
+    color: #B08968;
+    font-size: 4.5rem;
+    text-shadow: -1px -1px 0 #4E342E, 1px -1px 0 #4E342E, -1px 1px 0 #4E342E, 1px 1px 0 #4E342E;
+}
+
+/* 5. שדות קלט (Inputs) - עיצוב שמנת עם כיתוב חום */
+.auth-card input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 15px;
+    border: 2px solid #4E342E;
+    border-radius: 12px;
+    background-color: #FAF3E0; /* רקע שמנת */
+    color: #4E342E; /* טקסט חום בפנים */
+    font-size: 1rem;
+    outline: none;
+    box-sizing: border-box;
+}
+
+/* הגדרה לשדות ה-Disabled ב-RegisterDetails */
+.auth-card input:disabled {
+    background-color: #e5dcc3;
+    color: #8b7355;
+    cursor: not-allowed;
+    border-style: dashed;
+}
+
+/* 6. כפתורים - עיצוב שמנת עם כיתוב חום */
+.auth-card button, .authentication-container button {
+    width: 100%;
+    padding: 15px;
+    background-color: #FAF3E0; /* כפתור שמנת */
+    color: #4E342E;           /* כיתוב חום */
+    border: 2px solid #4E342E;
+    border-radius: 40px;
+    font-size: 1.2rem;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    margin-top: 10px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+}
+
+/* כפתורים למסך הבחירה בלבד (שלא יהיו רחבים מדי) */
+.authentication-container button {
+    width: 280px;
+}
+
+.auth-card button:hover, .authentication-container button:hover {
+    background-color: #4E342E; /* הופך לחום ב-hover */
+    color: #FAF3E0;           /* טקסט הופך לשמנת */
+    transform: translateY(-3px);
+}
+
+/* 7. הודעות שגיאה וטקסט תחתון */
+.error {
+    color: #ffd7d7;
+    background: rgba(139, 0, 0, 0.5);
+    padding: 10px;
+    border-radius: 10px;
+    margin-bottom: 15px;
+}
+
+.auth-switch {
+    margin-top: 20px;
+    color: #FAF3E0;
+}
+
+.link {
+    color: #FAF3E0;
+    font-weight: bold;
+    text-decoration: underline;
+    cursor: pointer;
+    margin-left: 5px;
+}
+
+.link:hover {
+    color: #4E342E;
+}

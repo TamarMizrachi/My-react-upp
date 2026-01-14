@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useHttp } from "../../../../hook/useHttp";
+import { useHttp } from "../../../../hooks/useHttp";
 import { apiRequest } from "../../../../services/api";
 
 const PhotoItem = ({ photo, onDataChange }) => {
@@ -36,10 +36,10 @@ const PhotoItem = ({ photo, onDataChange }) => {
     };
 
     return (
-        <div className="photo-card" style={{ border: '1px solid #ddd', padding: '10px', borderRadius: '8px' }}>
-            <img src={photo.thumbnailUrl} alt={photo.title} style={{ width: '100%' }} />
+        <div className="photo-card" >
+            <img src={photo.thumbnailUrl} alt={photo.title} />
             
-            <div className="photo-info" style={{ margin: '10px 0' }}>
+            <div className="photo-info">
                 {isEditing ? (
                     <>
                         <input 

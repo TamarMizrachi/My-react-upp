@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { apiRequest } from "../../../../services/api";
-import { useHttp } from "../../../../hook/useHttp";
+import { useHttp } from "../../../../hooks/useHttp";
 import { useAuth } from "../../../../context/AuthContext"
 
 const Comments = ({ postId }) => {
@@ -75,7 +75,7 @@ const Comments = ({ postId }) => {
                         <strong>
                             {c.email === currentUser.email
                                 ? "אני"
-                                : `${c.name} (${c.email})`}
+                                : `${c.name}`}
                         </strong>
                         {editingCommentId === c.id ? (
                             <>
