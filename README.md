@@ -1,16 +1,54 @@
-# React + Vite
+# Content Management System (CMS) - React Web Application
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Overview
 
-Currently, two official plugins are available:
+This project is a Single Page Application (SPA) built with React as part of a web development course.
+It interacts with a REST API (JSON-Server) and allows users to manage personal data such as tasks, posts, and photo albums through a clear and user-friendly interface.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Features
 
-## React Compiler
+* **Authentication System**: Login and Registration with password verification and session persistence using Local Storage
+* **User Dashboard (Home)**: Personalized page with user details and navigation
+* **Todos Management**: Full CRUD operations (Add, Edit, Delete, Toggle), including search and sorting
+* **Posts & Comments**: View posts, search content, and manage comments (Add, Edit, Delete) for user-owned posts
+* **Photo Albums**: Browse albums and photos with optimized loading (pagination / lazy loading)
+* **Advanced Routing**: Implemented with React Router v6 using informative URLs
+* **State Persistence & Caching**: Basic mechanisms to preserve state after refresh and reduce unnecessary API calls
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## Technologies Used
 
-## Expanding the ESLint configuration
+* **Frontend**: React (Hooks, Context API, React Router v6), HTML5, CSS3
+* **Backend Simulation**: JSON-Server (REST API)
+* **State Management**: useState, useEffect, useContext, useReducer, useMemo
+* **Async Operations**: JavaScript Promises, Async/Await, Fetch API
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## Project Structure
+
+* Component-based architecture
+* Separation of concerns (JS, CSS, components)
+* Single main entry file (index.js)
+
+## Getting Started
+
+1. Clone the repository
+2. Install dependencies:
+
+   ```
+   npm install
+   ```
+3. Run the local server:
+
+   ```
+   npx json-server --watch db.json --port 3000
+   ```
+4. Start the React app:
+
+   ```
+   npm start
+   ```
+
+## Notes
+
+* The application uses a local JSON-Server as a mock backend
+* User session is stored in Local Storage
+* Data is not permanently saved (mock API behavior)
